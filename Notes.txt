@@ -1,0 +1,56 @@
+For when we imported supabase in Auth Context:
+
+---
+
+1. Sign Up Function
+
+`const { data, error } = await supabase.auth.signUp({ email: email, password: password });`
+
+This line attempts to register a new user using their email and password. It uses the `signUp()` method from Supabase’s `auth` object. The response is split into `data` and `error`.
+
+`if (error) { return { success: false, error }; }`
+
+Here, we check if there was an error during sign-up. If so, we return an object stating the sign-up failed.
+
+`return { success: true, data };`
+
+If there was no error, the sign-up was successful. We return a success object with the user data.
+
+👉 **Why it’s written this way:**
+Returning an object like `{ success: true, data }` or `{ success: false, error }` makes it easier to handle the outcome later on, especially if you’re using this function somewhere else in your code.
+
+---
+
+2. Checking Session on Load
+
+`supabase.auth.getSession().then(({ data: { session } }) => { setSession(session); });`
+
+This line asks Supabase for the current session (i.e., is someone already logged in?). The response contains a `session` object, which we store in our React state using `setSession()`.
+
+👉 **Why it matters:**
+If a user refreshes the page or comes back later, we want to know whether they're still logged in. This line does that check on app load.
+
+---
+
+3. Watching for Login/Logout Changes
+
+`supabase.auth.onAuthStateChange((_event, session) => { setSession(session); });`
+
+This line sets up a live listener that reacts whenever the user's login status changes — for example, when they log in, sign out, or verify their email.
+
+👉 **What it does:**
+Every time the auth state changes, Supabase will send us the new `session`, and we store it again using `setSession(session)`. This keeps the app in sync with the user’s status.
+
+---
+
+4. What These Pieces Are
+
+* **supabase**: This is your Supabase client, created using:
+  `const supabase = createClient('your-project-url', 'your-public-api-key');`
+
+* **email and password**: These are the values the user enters, typically stored using React’s `useState()` like this:
+  `const [email, setEmail] = useState('');`
+  `const [password, setPassword] = useState('');`
+
+* **setSession**: This is your React setter for the session state, also defined with `useState()` like:
+  `const [session, setSession] = useState(null);`
