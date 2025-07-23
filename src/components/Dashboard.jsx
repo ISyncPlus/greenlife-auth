@@ -16,11 +16,11 @@ const Dashboard = () => {
   }
   console.log(session)
   return (
-    <div>
-      <h1 className="text-2xl font-medium">Dashboard</h1>
+    <div className="text-black flex flex-col justify-center items-center h-screen">
+      <h1 className="text-2xl font-medium transform -translate-y-30">Dashboard</h1>
       <h2>Welcome, {session?.user?.email}</h2>
       <div>
-        <button onClick={handleSignOut} className="hover:cursor-pointer border inline-block px-4 py-3 mt-4">Sign out</button>
+        <button onClick={handleSignOut} className="hover:cursor-pointer border inline-block px-4 py-3 mt-4 rounded-3xl">Sign out</button>
       </div>
     </div>
   )

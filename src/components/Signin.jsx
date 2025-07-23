@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { Link, Navigate, useNavigate } from 'react-router-dom'
+import Plant from '../assets/plant.png'
+import { Link, useNavigate } from 'react-router-dom'
 import { UserAuth } from '../context/AuthContext'
 
 const Signin = () => {
@@ -19,6 +20,7 @@ const Signin = () => {
       const result = await signInUser(email, password);
       if (result.success) {
         navigate('/dashboard')
+        console.log('It worked')
       }
     } catch(err) {
       setError('an error occured');
@@ -27,18 +29,23 @@ const Signin = () => {
     }
   }
   return (
-    <div className='bg-neutral-800'>
-      <form onSubmit={handleSignIn} className='max-w-md m-auto pt-24'>
-        <h2 className='font-bold pb-2'>Sign in</h2>
-        <p>Don't have an account? <Link to="/signup" className="hover:underline-offset-1 text-blue-500">Sign up</Link></p>
+    <div className='text-black flex justify-between max-h-screen'>
+      <form onSubmit={handleSignIn} className='w-md mx-auto mt-40'>
+        <h1 className="text-4xl font-medium mb-5">Welcome back!</h1>
+        <p className="font-medium">Enter your credentials to access your account</p>
 
-        <div className='flex flex-col py-4'>
-          <input onChange={(e) => setEmail(e.target.value)} type="email" placeholder='Email' className='p-3 mt-2 bg-neutral-950' />
-          <input onChange={(e) => setPassword(e.target.value)} type="password" placeholder='Password' className="p-3 my-2 bg-neutral-950"/>
-          <button type='submit' disabled={loading} className="bg-neutral-900 p-3 mt-4 hover:cursor-pointer active:opacity-90">Sign in</button>
+        <div className='flex flex-col py-4 mt-10'>
+          <label htmlFor="email">Email address</label>
+          <input onChange={(e) => setEmail(e.target.value)} name="email" type="email" placeholder='Enter your email' className='p-3 mt-2 border rounded-xl mb-5' />
+
+          <label htmlFor="password">Password</label>
+          <input onChange={(e) => setPassword(e.target.value)} name="password" type="password" placeholder='Enter your password' className="p-3 my-2 border rounded-xl"/>
+          <button type='submit' disabled={loading} className="bg-neutral-900 p-3 mt-4 hover:cursor-pointer hover:scale-98 text-white rounded-2xl transition-all duration-300 ease-in-out">Sign in</button>
         </div>
+        <p>Don't have an account? <Link to="/signup" className="hover:underline  text-blue-500">Sign up</Link></p>
       {error && <p className="text-red-600 text-center pt-4">{error}</p>}
       </form>
+      <img src={Plant} alt="plant" className="h-[100vh]"/>
     </div>
   )
 }

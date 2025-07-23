@@ -5,7 +5,7 @@ import { router } from "./routes/router"
 
 function App() {
   return (
-    <div className="text-white bg-neutral-800 h-screen">
+    <div className="text-white h-screen font-poppins">
       <AuthContextProvider>
         <RouterProvider router={router}/> 
       </AuthContextProvider>
